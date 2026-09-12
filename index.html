@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>STOKAI — Find Your Ground</title>
+  <meta name="description" content="Streetwear built on real ground. Drop 01 disponível agora."/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #0e0e0d;
+      --carbon:   #2c2c2a;
+      --stone:    #5f5e5a;
+      --muted:    #3d3d3a;
+      --offwhite: #f0ede6;
+      --warm:     #e8e4dc;
+      --amber:    #ba7517;
+      --border:   #1e1e1c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--offwhite);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--black);
+      border-bottom: 0.5px solid var(--border);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+    }
+
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+    }
+    .nav-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .nav-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--offwhite);
+    }
+    .nav-wordmark {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--offwhite);
+      letter-spacing: 0.26em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 10px;
+      color: var(--stone);
+      text-decoration: none;
+      letter-spacing: 0.18em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--offwhite); }
+
+    .nav-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .nav-actions button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+    .nav-actions svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--offwhite);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 32px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .hero-bg svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-corner-left {
+      position: absolute;
+      top: 80px;
+      left: 32px;
+      text-align: left;
+    }
+    .hero-corner-right {
+      position: absolute;
+      top: 80px;
+      right: 32px;
+      text-align: right;
+    }
+    .hero-corner-text {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--stone);
+      line-height: 1.9;
+    }
+
+    .hero-drop-tag {
+      font-size: 9px;
+      letter-spacing: 0.36em;
+      color: var(--amber);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .hero-crown {
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .hero-crown svg {
+      width: 36px;
+      height: 28px;
+      fill: var(--offwhite);
+      opacity: 0.85;
+    }
+
+    .hero-title {
+      font-size: clamp(52px, 10vw, 96px);
+      font-weight: 300;
+      letter-spacing: 0.20em;
+      color: var(--offwhite);
+      line-height: 1;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .hero-tagline {
+      font-size: 10px;
+      letter-spacing: 0.40em;
+      color: var(--stone);
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      border: 0.5px solid var(--offwhite);
+      color: var(--offwhite);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      padding: 14px 40px;
+      text-decoration: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      position: relative;
+      font-family: inherit;
+    }
+    .hero-cta:hover {
+      background: var(--offwhite);
+      color: var(--black);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-scroll span {
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+    }
+    .hero-scroll-line {
+      width: 0.5px;
+      height: 40px;
+      background: var(--border);
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 80px 32px;
+    }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      color: var(--stone);
+      margin-bottom: 40px;
+    }
+
+    /* ── PRODUCTS ── */
+    .products {
+      background: var(--warm);
+    }
+    .products .section-label { color: #888780; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .product-card {
+      cursor: pointer;
+    }
+    .product-card:hover .product-img-wrap { opacity: 0.92; }
+
+    .product-img-wrap {
+      aspect-ratio: 3/4;
+      background: var(--carbon);
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-img-wrap.light { background: #dedad2; }
+    .product-img-wrap.mid   { background: #252523; }
+
+    .product-img-wrap svg {
+      width: 55%;
+      height: 55%;
+    }
+
+    .product-new {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--amber);
+      color: var(--offwhite);
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      padding: 4px 10px;
+    }
+
+    .product-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .product-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--black);
+      letter-spacing: 0.08em;
+    }
+    .product-price {
+      font-size: 12px;
+      color: #888780;
+    }
+    .product-sub {
+      font-size: 10px;
+      color: #888780;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    /* ── ESTAMPA FEATURE ── */
+    .feature {
+      background: var(--black);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 0;
+    }
+    .feature-visual {
+      background: #111110;
+      border-right: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 48px;
+      min-height: 520px;
+    }
+    .feature-visual svg {
+      max-width: 320px;
+      width: 100%;
+    }
+    .feature-text {
+      padding: 80px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .feature-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      color: var(--amber);
+      margin-bottom: 24px;
+    }
+    .feature-title {
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--offwhite);
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+    .feature-body {
+      font-size: 13px;
+      color: var(--stone);
+      line-height: 1.8;
+      margin-bottom: 36px;
+      max-width: 320px;
+    }
+    .feature-link {
+      font-size: 10px;
+      letter-spacing: 0.20em;
+      color: var(--offwhite);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--border);
+      padding-bottom: 6px;
+      display: inline-block;
+      transition: border-color 0.2s;
+    }
+    .feature-link:hover { border-color: var(--offwhite); }
+
+    /* ── DROP BANNER ── */
+    .drop-banner {
+      background: var(--black);
+      padding: 80px 32px;
+      text-align: center;
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .drop-banner-tag {
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      color: var(--amber);
+      margin-bottom: 16px;
+    }
+    .drop-banner-title {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--offwhite);
+      margin-bottom: 8px;
+    }
+    .drop-banner-sub {
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      color: var(--stone);
+      margin-bottom: 40px;
+    }
+    .drop-banner-cta {
+      display: inline-block;
+      border: 0.5px solid var(--offwhite);
+      color: var(--offwhite);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      padding: 14px 40px;
+      text-decoration: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      font-family: inherit;
+    }
+    .drop-banner-cta:hover {
+      background: var(--offwhite);
+      color: var(--black);
+    }
+
+    /* ── BRAND MANIFESTO ── */
+    .manifesto {
+      background: #111110;
+      padding: 80px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      border-top: 0.5px solid var(--border);
+    }
+    .manifesto-quote {
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--offwhite);
+      line-height: 1.6;
+    }
+    .manifesto-quote em {
+      color: var(--amber);
+      font-style: normal;
+    }
+    .manifesto-body {
+      font-size: 13px;
+      color: var(--stone);
+      line-height: 1.9;
+    }
+    .manifesto-body p + p { margin-top: 16px; }
+
+    /* ── LOGO STRIP ── */
+    .logo-strip {
+      background: var(--black);
+      border-top: 0.5px solid var(--border);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-strip-left {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .logo-strip-dots-row {
+      display: flex;
+      gap: 8px;
+    }
+    .logo-strip-dots-row span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--offwhite);
+    }
+    .logo-strip-name {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: var(--offwhite);
+    }
+    .logo-strip-tagline {
+      font-size: 9px;
+      letter-spacing: 0.20em;
+      color: var(--stone);
+    }
+    .logo-strip-right {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 0.5px solid var(--border);
+      padding: 48px 32px 24px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand-name {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: var(--offwhite);
+      margin-bottom: 12px;
+    }
+    .footer-brand-desc {
+      font-size: 11px;
+      color: var(--stone);
+      line-height: 1.8;
+      max-width: 220px;
+    }
+    .footer-col h4 {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.20em;
+      color: var(--offwhite);
+      margin-bottom: 16px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 11px;
+      color: var(--stone);
+      text-decoration: none;
+      letter-spacing: 0.10em;
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--offwhite); }
+    .footer-bottom {
+      border-top: 0.5px solid var(--border);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom span {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 20px 72px; }
+      .hero-corner-left, .hero-corner-right { display: none; }
+      section { padding: 56px 20px; }
+      .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .feature { grid-template-columns: 1fr; }
+      .feature-visual { min-height: 300px; padding: 48px 24px; border-right: none; border-bottom: 0.5px solid var(--border); }
+      .feature-text { padding: 48px 24px; }
+      .manifesto { grid-template-columns: 1fr; gap: 32px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { letter-spacing: 0.12em; }
+      .products-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav aria-label="Navegação principal">
+  <a href="#" class="nav-logo" aria-label="STOKAI — página inicial">
+    <div class="nav-dots" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-wordmark">STOKAI</div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#drop">DROP 01</a></li>
+    <li><a href="#colecao">COLEÇÃO</a></li>
+    <li><a href="#sobre">SOBRE</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <button aria-label="Buscar">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+    <button aria-label="Carrinho">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio" aria-label="Apresentação da marca">
+
+  <div class="hero-bg" aria-hidden="true">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <path d="M0,200 Q300,170 600,200 Q900,230 1200,200" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.08"/>
+      <path d="M0,280 Q300,248 600,280 Q900,312 1200,280" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.06"/>
+      <path d="M0,360 Q300,326 600,360 Q900,394 1200,360" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.07"/>
+      <path d="M0,440 Q300,404 600,440 Q900,476 1200,440" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.05"/>
+      <path d="M0,520 Q300,482 600,520 Q900,558 1200,520" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.06"/>
+      <path d="M0,600 Q300,560 600,600 Q900,640 1200,600" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.04"/>
+      <path d="M0,680 Q300,638 600,680 Q900,722 1200,680" fill="none" stroke="#ba7517" stroke-width="0.6" opacity="0.25"/>
+      <path d="M0,700 Q300,660 600,700 Q900,740 1200,700" fill="none" stroke="#ba7517" stroke-width="0.3" opacity="0.14"/>
+    </svg>
+  </div>
+
+  <div class="hero-corner-left" aria-hidden="true">
+    <p class="hero-corner-text">STOKAI<br>URBAN WEAR<br>FOR REAL PEOPLE</p>
+  </div>
+  <div class="hero-corner-right" aria-hidden="true">
+    <p class="hero-corner-text">STREETWEAR<br>BUILT ON<br>REAL GROUND</p>
+  </div>
+
+  <p class="hero-drop-tag">DROP 01 — COLEÇÃO INAUGURAL</p>
+
+  <div class="hero-crown" aria-hidden="true">
+    <svg viewBox="0 0 60 46">
+      <path d="M6,42 L18,12 L30,28 L42,8 L54,12 L54,42 Z"/>
+    </svg>
+  </div>
+
+  <h1 class="hero-title">STOKAI</h1>
+  <p class="hero-tagline">FIND YOUR GROUND</p>
+
+  <a href="#colecao" class="hero-cta">VER COLEÇÃO</a>
+
+  <div class="hero-scroll" aria-hidden="true">
+    <span>SCROLL</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section class="products" id="colecao" aria-label="Coleção Drop 01">
+  <p class="section-label">PRODUTOS — DROP 01</p>
+
+  <div class="products-grid">
+
+    <!-- Camiseta Preta -->
+    <article class="product-card">
+      <div class="product-img-wrap">
+        <span class="product-new">NEW</span>
+        <svg viewBox="0 0 100 120" aria-hidden="true">
+          <rect x="18" y="36" width="64" height="70" rx="2" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+          <path d="M18,36 L18,48 L6,54 L6,36 Z" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+          <path d="M82,36 L82,48 L94,54 L94,36 Z" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+          <path d="M34,36 Q50,26 66,36" fill="none" stroke="#f0ede6" stroke-width="1"/>
+          <circle cx="42" cy="56" r="2.5" fill="#f0ede6"/>
+          <circle cx="50" cy="56" r="2.5" fill="#f0ede6"/>
+          <circle cx="58" cy="56" r="2.5" fill="#f0ede6"/>
+          <text x="50" y="72" text-anchor="middle" font-family="Helvetica Neue, sans-serif" font-size="7" fill="#f0ede6" letter-spacing="2">STOKAI</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="product-name" style="color:var(--black);">Camiseta O Olimpo</span>
+        <span class="product-price">R$ 89,90</span>
+      </div>
+      <p class="product-sub">Preta — Drop 01</p>
+    </article>
+
+    <!-- Camiseta Off-white -->
+    <article class="product-card">
+      <div class="product-img-wrap light">
+        <span class="product-new">NEW</span>
+        <svg viewBox="0 0 100 120" aria-hidden="true">
+          <rect x="18" y="36" width="64" height="70" rx="2" fill="none" stroke="#0e0e0d" stroke-width="1.2"/>
+          <path d="M18,36 L18,48 L6,54 L6,36 Z" fill="none" stroke="#0e0e0d" stroke-width="1.2"/>
+          <path d="M82,36 L82,48 L94,54 L94,36 Z" fill="none" stroke="#0e0e0d" stroke-width="1.2"/>
+          <path d="M34,36 Q50,26 66,36" fill="none" stroke="#0e0e0d" stroke-width="1"/>
+          <circle cx="42" cy="56" r="2.5" fill="#0e0e0d"/>
+          <circle cx="50" cy="56" r="2.5" fill="#0e0e0d"/>
+          <circle cx="58" cy="56" r="2.5" fill="#0e0e0d"/>
+          <text x="50" y="72" text-anchor="middle" font-family="Helvetica Neue, sans-serif" font-size="7" fill="#0e0e0d" letter-spacing="2">STOKAI</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="product-name" style="color:var(--black);">Camiseta A Stoa</span>
+        <span class="product-price">R$ 89,90</span>
+      </div>
+      <p class="product-sub">Off-white — Drop 01</p>
+    </article>
+
+    <!-- Moletom -->
+    <article class="product-card">
+      <div class="product-img-wrap mid">
+        <span class="product-new">NEW</span>
+        <svg viewBox="0 0 100 120" aria-hidden="true">
+          <rect x="14" y="38" width="72" height="68" rx="2" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+          <path d="M14,38 L14,52 L2,58 L2,38 Z" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+          <path d="M86,38 L86,52 L98,58 L98,38 Z" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+          <path d="M32,38 Q50,24 68,38 Q58,30 50,28 Q42,30 32,38 Z" fill="#1a1a18" stroke="#f0ede6" stroke-width="1"/>
+          <rect x="32" y="90" width="36" height="10" rx="2" fill="#1e1e1c"/>
+          <circle cx="41" cy="56" r="3" fill="#f0ede6"/>
+          <circle cx="50" cy="56" r="3" fill="#f0ede6"/>
+          <circle cx="59" cy="56" r="3" fill="#f0ede6"/>
+          <text x="50" y="74" text-anchor="middle" font-family="Helvetica Neue, sans-serif" font-size="7" fill="#f0ede6" letter-spacing="2">STOKAI</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="product-name" style="color:var(--black);">Moletom Logo</span>
+        <span class="product-price">R$ 189,90</span>
+      </div>
+      <p class="product-sub">Carvão — Drop 01</p>
+    </article>
+  </div>
+</section>
+
+<!-- FEATURE — ESTAMPA -->
+<section class="feature" id="drop" aria-label="Estampa principal do drop">
+  <div class="feature-visual" aria-hidden="true">
+    <!-- Arte Stoa Urbana simplificada -->
+    <svg viewBox="0 0 340 420">
+      <!-- linhas topografia -->
+      <path d="M0,280 Q85,265 170,280 Q255,295 340,280" fill="none" stroke="#2c2c2a" stroke-width="0.6"/>
+      <path d="M0,300 Q85,283 170,300 Q255,317 340,300" fill="none" stroke="#2c2c2a" stroke-width="0.6"/>
+      <path d="M0,320 Q85,301 170,320 Q255,339 340,320" fill="none" stroke="#252523" stroke-width="0.6"/>
+      <path d="M0,340 Q85,319 170,340 Q255,361 340,340" fill="none" stroke="#252523" stroke-width="0.6"/>
+      <!-- linhas âmbar -->
+      <path d="M0,355 Q100,338 200,352 Q270,362 340,346" fill="none" stroke="#ba7517" stroke-width="2.5" opacity="0.6"/>
+      <path d="M0,370 Q100,355 200,367 Q270,376 340,361" fill="none" stroke="#ba7517" stroke-width="1.2" opacity="0.3"/>
+      <!-- colunas -->
+      <rect x="60" y="155" width="220" height="10" fill="#f0ede6"/>
+      <path d="M80,155 L92,140 L104,155 L116,140 L128,155 L140,140 L152,155 L164,140 L176,155 L188,140 L200,155 L212,140 L224,155 L236,140 L248,155 L260,140 L272,155" fill="none" stroke="#f0ede6" stroke-width="0.8"/>
+      <rect x="58" y="140" width="224" height="16" fill="none" stroke="#f0ede6" stroke-width="1"/>
+      <!-- col 1 -->
+      <rect x="74" y="165" width="14" height="148" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+      <line x1="79" y1="168" x2="79" y2="310" stroke="#2c2c2a" stroke-width="0.5"/>
+      <line x1="83" y1="168" x2="83" y2="310" stroke="#2c2c2a" stroke-width="0.5"/>
+      <rect x="66" y="157" width="30" height="10" fill="#f0ede6"/>
+      <rect x="66" y="310" width="30" height="10" fill="#f0ede6"/>
+      <!-- col 2 -->
+      <rect x="136" y="165" width="14" height="148" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+      <line x1="141" y1="168" x2="141" y2="310" stroke="#2c2c2a" stroke-width="0.5"/>
+      <line x1="145" y1="168" x2="145" y2="310" stroke="#2c2c2a" stroke-width="0.5"/>
+      <rect x="128" y="157" width="30" height="10" fill="#f0ede6"/>
+      <rect x="128" y="310" width="30" height="10" fill="#f0ede6"/>
+      <!-- col 3 -->
+      <rect x="196" y="165" width="14" height="148" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+      <line x1="201" y1="168" x2="201" y2="310" stroke="#2c2c2a" stroke-width="0.5"/>
+      <line x1="205" y1="168" x2="205" y2="310" stroke="#2c2c2a" stroke-width="0.5"/>
+      <rect x="188" y="157" width="30" height="10" fill="#f0ede6"/>
+      <rect x="188" y="310" width="30" height="10" fill="#f0ede6"/>
+      <!-- col 4 -->
+      <rect x="256" y="165" width="14" height="148" fill="none" stroke="#f0ede6" stroke-width="1.2"/>
+      <line x1="261" y1="168" x2="261" y2="310" stroke="#2c2c2a" stroke-width="0.5"/>
+      <line x1="265" y1="168" x2="265" y2="310" stroke="#2c2c2a" stroke-width="0.5"/>
+      <rect x="248" y="157" width="30" height="10" fill="#f0ede6"/>
+      <rect x="248" y="310" width="30" height="10" fill="#f0ede6"/>
+      <!-- base -->
+      <rect x="58" y="320" width="224" height="8" fill="#f0ede6"/>
+      <!-- três pontos -->
+      <circle cx="158" cy="132" r="5" fill="#f0ede6"/>
+      <circle cx="170" cy="132" r="5" fill="#f0ede6"/>
+      <circle cx="182" cy="132" r="5" fill="#f0ede6"/>
+      <!-- STOKAI -->
+      <text x="170" y="60" text-anchor="middle" font-family="Helvetica Neue, sans-serif" font-size="36" font-weight="300" fill="#f0ede6" letter-spacing="8" opacity="0.9">STOKAI</text>
+      <!-- coroa -->
+      <path d="M150,88 L158,72 L170,82 L182,68 L190,88 Z" fill="#f0ede6" opacity="0.8"/>
+      <!-- rodapé -->
+      <text x="170" y="368" text-anchor="middle" font-family="Helvetica Neue, sans-serif" font-size="8" fill="#3d3d3a" letter-spacing="4">STOKAI</text>
+      <line x1="140" y1="374" x2="200" y2="374" stroke="#2c2c2a" stroke-width="0.5"/>
+      <text x="170" y="384" text-anchor="middle" font-family="Helvetica Neue, sans-serif" font-size="6.5" fill="#2c2c2a" letter-spacing="3">FIND YOUR GROUND</text>
+    </svg>
+  </div>
+
+  <div class="feature-text">
+    <p class="feature-eyebrow">ESTAMPA PRINCIPAL — DROP 01</p>
+    <h2 class="feature-title">A Stoa<br>no asfalto</h2>
+    <p class="feature-body">
+      STOA era o pórtico onde os filósofos gregos se reuniam. Um espaço de encontro, pensamento e pertencimento. A STOKAI traz essa estrutura para a rua — colunas erguidas no meio da cidade, com a energia e o peso do urbano ao redor.
+    </p>
+    <a href="#colecao" class="feature-link">VER PRODUTOS</a>
+  </div>
+</section>
+
+<!-- DROP BANNER -->
+<div class="drop-banner" id="sobre">
+  <p class="drop-banner-tag">DISPONÍVEL AGORA</p>
+  <h2 class="drop-banner-title">DROP 01</h2>
+  <p class="drop-banner-sub">FIND YOUR GROUND</p>
+  <a href="#colecao" class="drop-banner-cta">GARANTIR PEÇA</a>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto" aria-label="Manifesto da marca">
+  <div>
+    <p class="manifesto-quote">
+      Roupa que te faz sentir <em>no lugar certo</em> — seja onde for.
+    </p>
+  </div>
+  <div class="manifesto-body">
+    <p>
+      STOKAI nasceu de uma sensação. Aquele momento quando você veste algo e se sente inteiro — no alto, no equilíbrio, em movimento. Não é vaidade. É pertencimento.
+    </p>
+    <p>
+      O nome vem do grego STOA — o pórtico, o abrigo, o lugar de encontro — e KAI — o momento, o impulso, a força do agora. Juntos, formam o que acreditamos que toda roupa deveria fazer: te dar um lugar no mundo.
+    </p>
+    <p>
+      Streetwear urbano feito pra quem está em movimento mas sabe onde pisa.
+    </p>
+  </div>
+</section>
+
+<!-- LOGO STRIP -->
+<div class="logo-strip" aria-hidden="true">
+  <div class="logo-strip-left">
+    <div class="logo-strip-dots-row">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="logo-strip-name">STOKAI</div>
+    <div class="logo-strip-tagline">FIND YOUR GROUND</div>
+  </div>
+  <div class="logo-strip-right">
+    URBAN WEAR<br>FOR REAL PEOPLE
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-brand-name">STOKAI</p>
+      <p class="footer-brand-desc">Streetwear urbano construído em cima de um conceito real. Find your ground.</p>
+    </div>
+    <div class="footer-col">
+      <h4>LOJA</h4>
+      <a href="#colecao">Drop 01</a>
+      <a href="#colecao">Camisetas</a>
+      <a href="#colecao">Moletons</a>
+    </div>
+    <div class="footer-col">
+      <h4>MARCA</h4>
+      <a href="#sobre">Sobre</a>
+      <a href="#sobre">Manifesto</a>
+      <a href="#">Contato</a>
+    </div>
+    <div class="footer-col">
+      <h4>AJUDA</h4>
+      <a href="#">Trocas</a>
+      <a href="#">Entrega</a>
+      <a href="#">FAQ</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 STOKAI — FIND YOUR GROUND</span>
+    <span>FEITO NO BRASIL</span>
+  </div>
+</footer>
+
+</body>
+</html>
