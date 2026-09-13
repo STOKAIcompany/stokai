@@ -2,9 +2,12 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="theme-color" content="#0e0e0d"/>
   <title>STOKAI — Find Your Ground</title>
   <meta name="description" content="Streetwear built on real ground. Drop 01 disponível agora."/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="shortcut icon" href="favicon.svg"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -17,273 +20,312 @@
       --amber:    #ba7517;
       --border:   #1e1e1c;
     }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
       background: var(--black);
       color: var(--offwhite);
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* ── NAV ── */
+    /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: var(--black);
       border-bottom: 0.5px solid var(--border);
-      height: 60px;
+      height: 56px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 32px;
+      padding: 0 20px;
     }
     .nav-logo { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; }
-    .nav-dots { display: flex; gap: 6px; }
-    .nav-dots span { width: 5px; height: 5px; border-radius: 50%; background: var(--offwhite); }
-    .nav-wordmark { font-size: 12px; font-weight: 500; color: var(--offwhite); letter-spacing: 0.26em; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a {
-      font-size: 10px; color: var(--stone); text-decoration: none;
-      letter-spacing: 0.18em; transition: color 0.2s; cursor: pointer;
-    }
+    .nav-dots { display: flex; gap: 5px; }
+    .nav-dots span { width: 5px; height: 5px; border-radius: 50%; background: var(--offwhite); display: block; }
+    .nav-wordmark { font-size: 11px; font-weight: 500; color: var(--offwhite); letter-spacing: 0.26em; }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { font-size: 10px; color: var(--stone); text-decoration: none; letter-spacing: 0.16em; cursor: pointer; transition: color 0.2s; }
     .nav-links a:hover { color: var(--offwhite); }
-    .nav-actions { display: flex; gap: 20px; align-items: center; }
-    .nav-actions button { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; }
-    .nav-actions svg { width: 18px; height: 18px; stroke: var(--offwhite); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-actions { display: flex; gap: 16px; align-items: center; }
+    .nav-actions button { background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center; -webkit-tap-highlight-color: transparent; }
+    .nav-actions svg { width: 20px; height: 20px; stroke: var(--offwhite); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; -webkit-tap-highlight-color: transparent; }
+    .nav-menu-btn span { display: block; width: 22px; height: 1px; background: var(--offwhite); transition: all 0.3s; }
 
-    /* ── HERO ── */
+    /* MOBILE NAV DRAWER */
+    .nav-drawer {
+      display: none; position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+      background: var(--black); z-index: 99; flex-direction: column;
+      padding: 40px 24px; border-top: 0.5px solid var(--border);
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      font-size: 13px; color: var(--stone); text-decoration: none;
+      letter-spacing: 0.20em; padding: 18px 0;
+      border-bottom: 0.5px solid var(--border);
+      cursor: pointer; transition: color 0.2s;
+    }
+    .nav-drawer a:hover { color: var(--offwhite); }
+    .nav-drawer .drawer-insta {
+      margin-top: 32px; display: flex; align-items: center; gap: 10px;
+      font-size: 12px; color: var(--stone); text-decoration: none; letter-spacing: 0.14em;
+    }
+    .nav-drawer .drawer-insta svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* HERO */
     .hero {
-      min-height: 100vh; display: flex; flex-direction: column;
+      min-height: 100svh; display: flex; flex-direction: column;
       align-items: center; justify-content: center; text-align: center;
-      padding: 120px 32px 80px; position: relative; overflow: hidden;
+      padding: 90px 24px 80px; position: relative; overflow: hidden;
     }
     .hero-bg { position: absolute; inset: 0; pointer-events: none; }
     .hero-bg svg { width: 100%; height: 100%; }
-    .hero-corner-left { position: absolute; top: 80px; left: 32px; text-align: left; }
-    .hero-corner-right { position: absolute; top: 80px; right: 32px; text-align: right; }
-    .hero-corner-text { font-size: 9px; letter-spacing: 0.16em; color: var(--stone); line-height: 1.9; }
-    .hero-drop-tag { font-size: 9px; letter-spacing: 0.36em; color: var(--amber); margin-bottom: 20px; position: relative; }
+    .hero-corner-left { position: absolute; top: 72px; left: 20px; text-align: left; }
+    .hero-corner-right { position: absolute; top: 72px; right: 20px; text-align: right; }
+    .hero-corner-text { font-size: 8px; letter-spacing: 0.14em; color: var(--stone); line-height: 2; }
+    .hero-drop-tag { font-size: 9px; letter-spacing: 0.32em; color: var(--amber); margin-bottom: 16px; position: relative; }
     .hero-crown { position: relative; margin-bottom: 8px; }
-    .hero-crown svg { width: 36px; height: 28px; fill: var(--offwhite); opacity: 0.85; }
-    .hero-title { font-size: clamp(52px, 10vw, 96px); font-weight: 300; letter-spacing: 0.20em; color: var(--offwhite); line-height: 1; margin-bottom: 12px; position: relative; }
-    .hero-tagline { font-size: 10px; letter-spacing: 0.40em; color: var(--stone); margin-bottom: 48px; position: relative; }
+    .hero-crown svg { width: 32px; height: 24px; fill: var(--offwhite); opacity: 0.85; }
+    .hero-title { font-size: clamp(44px, 13vw, 96px); font-weight: 300; letter-spacing: 0.18em; color: var(--offwhite); line-height: 1; margin-bottom: 12px; position: relative; }
+    .hero-tagline { font-size: 9px; letter-spacing: 0.38em; color: var(--stone); margin-bottom: 40px; position: relative; }
     .hero-cta {
       display: inline-block; border: 0.5px solid var(--offwhite); color: var(--offwhite);
-      font-size: 10px; letter-spacing: 0.24em; padding: 14px 40px; text-decoration: none;
+      font-size: 10px; letter-spacing: 0.22em; padding: 14px 36px; text-decoration: none;
       background: transparent; cursor: pointer; transition: background 0.2s, color 0.2s;
-      position: relative; font-family: inherit;
+      position: relative; font-family: inherit; -webkit-tap-highlight-color: transparent;
+      min-height: 48px; display: inline-flex; align-items: center;
     }
-    .hero-cta:hover { background: var(--offwhite); color: var(--black); }
-    .hero-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .hero-scroll span { font-size: 8px; letter-spacing: 0.22em; color: var(--muted); }
-    .hero-scroll-line { width: 0.5px; height: 40px; background: var(--border); }
+    .hero-cta:active { background: var(--offwhite); color: var(--black); }
+    .hero-scroll { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .hero-scroll span { font-size: 8px; letter-spacing: 0.20em; color: var(--muted); }
+    .hero-scroll-line { width: 0.5px; height: 32px; background: var(--border); }
 
-    /* ── SECTIONS ── */
-    section { padding: 80px 32px; }
-    .section-label { font-size: 9px; letter-spacing: 0.26em; color: var(--stone); margin-bottom: 40px; }
-
-    /* ── PRODUCTS ── */
-    .products { background: var(--warm); }
-    .products .section-label { color: #888780; }
-    .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    /* PRODUCTS */
+    .products { background: var(--warm); padding: 56px 20px; }
+    .section-label { font-size: 9px; letter-spacing: 0.24em; color: #888780; margin-bottom: 32px; }
+    .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .product-card { cursor: pointer; }
-    .product-card:hover .product-img-wrap { opacity: 0.92; }
     .product-img-wrap {
-      aspect-ratio: 3/4; background: var(--carbon); margin-bottom: 16px;
-      position: relative; overflow: hidden; transition: opacity 0.2s;
+      aspect-ratio: 3/4; background: var(--carbon); margin-bottom: 12px;
+      position: relative; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
     }
     .product-img-wrap.light { background: #dedad2; }
     .product-img-wrap.mid   { background: #252523; }
     .product-img-wrap svg { width: 55%; height: 55%; }
-    .product-new { position: absolute; top: 12px; left: 12px; background: var(--amber); color: var(--offwhite); font-size: 8px; letter-spacing: 0.16em; padding: 4px 10px; }
-    .product-info { display: flex; justify-content: space-between; align-items: baseline; }
-    .product-name { font-size: 12px; font-weight: 500; color: var(--black); letter-spacing: 0.08em; }
-    .product-price { font-size: 12px; color: #888780; }
-    .product-sub { font-size: 10px; color: #888780; letter-spacing: 0.08em; margin-top: 4px; }
+    .product-new { position: absolute; top: 10px; left: 10px; background: var(--amber); color: var(--offwhite); font-size: 8px; letter-spacing: 0.14em; padding: 3px 8px; }
+    .product-info { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .product-name { font-size: 11px; font-weight: 500; color: var(--black); letter-spacing: 0.06em; }
+    .product-price { font-size: 11px; color: #888780; white-space: nowrap; }
+    .product-sub { font-size: 9px; color: #888780; letter-spacing: 0.08em; margin-top: 3px; }
+    .product-full { grid-column: 1 / -1; }
+    .product-full .product-img-wrap { aspect-ratio: 16/9; }
 
-    /* ── FEATURE ── */
-    .feature { background: var(--black); display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 0; }
-    .feature-visual { background: #111110; border-right: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 80px 48px; min-height: 520px; }
-    .feature-visual svg { max-width: 320px; width: 100%; }
-    .feature-text { padding: 80px 48px; display: flex; flex-direction: column; justify-content: center; }
-    .feature-eyebrow { font-size: 9px; letter-spacing: 0.28em; color: var(--amber); margin-bottom: 24px; }
-    .feature-title { font-size: 28px; font-weight: 300; letter-spacing: 0.12em; color: var(--offwhite); line-height: 1.4; margin-bottom: 20px; }
-    .feature-body { font-size: 13px; color: var(--stone); line-height: 1.8; margin-bottom: 36px; max-width: 320px; }
-    .feature-link { font-size: 10px; letter-spacing: 0.20em; color: var(--offwhite); text-decoration: none; border-bottom: 0.5px solid var(--border); padding-bottom: 6px; display: inline-block; transition: border-color 0.2s; cursor: pointer; }
-    .feature-link:hover { border-color: var(--offwhite); }
+    /* FEATURE */
+    .feature { background: var(--black); padding: 0; }
+    .feature-visual { background: #111110; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
+    .feature-visual svg { max-width: 280px; width: 100%; }
+    .feature-text { padding: 40px 24px; }
+    .feature-eyebrow { font-size: 9px; letter-spacing: 0.26em; color: var(--amber); margin-bottom: 16px; }
+    .feature-title { font-size: 24px; font-weight: 300; letter-spacing: 0.10em; color: var(--offwhite); line-height: 1.4; margin-bottom: 16px; }
+    .feature-body { font-size: 13px; color: var(--stone); line-height: 1.8; margin-bottom: 28px; }
+    .feature-link { font-size: 10px; letter-spacing: 0.18em; color: var(--offwhite); text-decoration: none; border-bottom: 0.5px solid var(--border); padding-bottom: 5px; display: inline-block; cursor: pointer; }
 
-    /* ── DROP BANNER ── */
-    .drop-banner { background: var(--black); padding: 80px 32px; text-align: center; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
-    .drop-banner-tag { font-size: 9px; letter-spacing: 0.32em; color: var(--amber); margin-bottom: 16px; }
-    .drop-banner-title { font-size: clamp(28px, 5vw, 48px); font-weight: 300; letter-spacing: 0.18em; color: var(--offwhite); margin-bottom: 8px; }
-    .drop-banner-sub { font-size: 10px; letter-spacing: 0.32em; color: var(--stone); margin-bottom: 40px; }
-    .drop-banner-cta { display: inline-block; border: 0.5px solid var(--offwhite); color: var(--offwhite); font-size: 10px; letter-spacing: 0.24em; padding: 14px 40px; text-decoration: none; background: transparent; cursor: pointer; transition: background 0.2s, color 0.2s; font-family: inherit; }
-    .drop-banner-cta:hover { background: var(--offwhite); color: var(--black); }
+    /* DROP BANNER */
+    .drop-banner { background: var(--black); padding: 56px 24px; text-align: center; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+    .drop-banner-tag { font-size: 9px; letter-spacing: 0.30em; color: var(--amber); margin-bottom: 12px; }
+    .drop-banner-title { font-size: clamp(28px, 8vw, 48px); font-weight: 300; letter-spacing: 0.16em; color: var(--offwhite); margin-bottom: 8px; }
+    .drop-banner-sub { font-size: 9px; letter-spacing: 0.30em; color: var(--stone); margin-bottom: 32px; }
+    .drop-banner-cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 0.5px solid var(--offwhite); color: var(--offwhite);
+      font-size: 10px; letter-spacing: 0.22em; padding: 14px 36px; text-decoration: none;
+      background: transparent; cursor: pointer; transition: background 0.2s, color 0.2s;
+      font-family: inherit; min-height: 48px; -webkit-tap-highlight-color: transparent;
+    }
+    .drop-banner-cta:active { background: var(--offwhite); color: var(--black); }
 
-    /* ── MANIFESTO ── */
-    .manifesto { background: #111110; padding: 80px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; border-top: 0.5px solid var(--border); }
-    .manifesto-quote { font-size: clamp(20px, 3vw, 28px); font-weight: 300; letter-spacing: 0.06em; color: var(--offwhite); line-height: 1.6; }
+    /* MANIFESTO */
+    .manifesto { background: #111110; padding: 56px 24px; border-top: 0.5px solid var(--border); }
+    .manifesto-quote { font-size: clamp(18px, 5vw, 26px); font-weight: 300; letter-spacing: 0.04em; color: var(--offwhite); line-height: 1.6; margin-bottom: 28px; }
     .manifesto-quote em { color: var(--amber); font-style: normal; }
     .manifesto-body { font-size: 13px; color: var(--stone); line-height: 1.9; }
-    .manifesto-body p + p { margin-top: 16px; }
+    .manifesto-body p + p { margin-top: 14px; }
 
-    /* ── INSTAGRAM STRIP ── */
-    .insta-strip {
-      background: var(--black);
-      border-top: 0.5px solid var(--border);
-      padding: 48px 32px;
-      text-align: center;
-    }
-    .insta-strip p { font-size: 9px; letter-spacing: 0.26em; color: var(--stone); margin-bottom: 20px; }
+    /* INSTAGRAM STRIP */
+    .insta-strip { background: var(--black); border-top: 0.5px solid var(--border); padding: 40px 24px; text-align: center; }
+    .insta-strip p { font-size: 9px; letter-spacing: 0.24em; color: var(--stone); margin-bottom: 20px; }
     .insta-link {
       display: inline-flex; align-items: center; gap: 10px;
-      border: 0.5px solid var(--border); padding: 14px 32px;
+      border: 0.5px solid var(--border); padding: 14px 28px;
       text-decoration: none; color: var(--offwhite);
-      font-size: 11px; letter-spacing: 0.20em;
-      transition: border-color 0.2s, color 0.2s;
+      font-size: 11px; letter-spacing: 0.18em;
+      min-height: 48px; -webkit-tap-highlight-color: transparent;
     }
-    .insta-link:hover { border-color: var(--offwhite); }
     .insta-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
-    /* ── LOGO STRIP ── */
-    .logo-strip { background: var(--black); border-top: 0.5px solid var(--border); padding: 32px; display: flex; align-items: center; justify-content: space-between; }
+    /* LOGO STRIP */
+    .logo-strip { background: var(--black); border-top: 0.5px solid var(--border); padding: 28px 20px; display: flex; align-items: center; justify-content: space-between; }
     .logo-strip-left { display: flex; flex-direction: column; gap: 3px; }
-    .logo-strip-dots-row { display: flex; gap: 8px; }
-    .logo-strip-dots-row span { width: 8px; height: 8px; border-radius: 50%; background: var(--offwhite); }
-    .logo-strip-name { font-size: 10px; font-weight: 500; letter-spacing: 0.22em; color: var(--offwhite); }
-    .logo-strip-tagline { font-size: 9px; letter-spacing: 0.20em; color: var(--stone); }
-    .logo-strip-right { font-size: 9px; letter-spacing: 0.14em; color: var(--muted); text-align: right; line-height: 1.8; }
+    .logo-strip-dots-row { display: flex; gap: 7px; }
+    .logo-strip-dots-row span { width: 7px; height: 7px; border-radius: 50%; background: var(--offwhite); display: block; }
+    .logo-strip-name { font-size: 10px; font-weight: 500; letter-spacing: 0.20em; color: var(--offwhite); }
+    .logo-strip-tagline { font-size: 8px; letter-spacing: 0.18em; color: var(--stone); }
+    .logo-strip-right { font-size: 8px; letter-spacing: 0.12em; color: var(--muted); text-align: right; line-height: 2; }
 
-    /* ── FOOTER ── */
-    footer { background: var(--black); border-top: 0.5px solid var(--border); padding: 48px 32px 24px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
-    .footer-brand-name { font-size: 11px; font-weight: 500; letter-spacing: 0.22em; color: var(--offwhite); margin-bottom: 12px; }
-    .footer-brand-desc { font-size: 11px; color: var(--stone); line-height: 1.8; max-width: 220px; }
-    .footer-col h4 { font-size: 9px; font-weight: 500; letter-spacing: 0.20em; color: var(--offwhite); margin-bottom: 16px; }
-    .footer-col a { display: block; font-size: 11px; color: var(--stone); text-decoration: none; letter-spacing: 0.10em; margin-bottom: 10px; transition: color 0.2s; cursor: pointer; }
-    .footer-col a:hover { color: var(--offwhite); }
-    .footer-social { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--stone); text-decoration: none; letter-spacing: 0.10em; margin-bottom: 10px; transition: color 0.2s; }
-    .footer-social:hover { color: var(--offwhite); }
-    .footer-social svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .footer-bottom { border-top: 0.5px solid var(--border); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
-    .footer-bottom span { font-size: 9px; letter-spacing: 0.12em; color: var(--muted); }
+    /* FOOTER */
+    footer { background: var(--black); border-top: 0.5px solid var(--border); padding: 40px 20px 24px; }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-brand-name { font-size: 11px; font-weight: 500; letter-spacing: 0.20em; color: var(--offwhite); margin-bottom: 10px; }
+    .footer-brand-desc { font-size: 11px; color: var(--stone); line-height: 1.8; }
+    .footer-col h4 { font-size: 9px; font-weight: 500; letter-spacing: 0.18em; color: var(--offwhite); margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 11px; color: var(--stone); text-decoration: none; letter-spacing: 0.10em; margin-bottom: 10px; cursor: pointer; min-height: 32px; display: flex; align-items: center; gap: 8px; }
+    .footer-col a svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .footer-bottom { border-top: 0.5px solid var(--border); padding-top: 18px; display: flex; flex-direction: column; gap: 6px; }
+    .footer-bottom span { font-size: 9px; letter-spacing: 0.10em; color: var(--muted); }
 
-    /* ── MODAL ── */
+    /* MODAL */
     .modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(14,14,13,0.92);
-      align-items: center; justify-content: center;
-      padding: 24px;
+      background: rgba(14,14,13,0.94);
+      align-items: flex-end; justify-content: center;
+      padding: 0;
     }
     .modal-overlay.active { display: flex; }
     .modal {
       background: #111110;
       border: 0.5px solid var(--border);
-      max-width: 640px; width: 100%;
-      max-height: 85vh;
+      border-bottom: none;
+      width: 100%; max-width: 640px;
+      max-height: 88svh;
       overflow-y: auto;
       position: relative;
+      border-radius: 12px 12px 0 0;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    .modal-handle {
+      width: 36px; height: 4px; background: var(--border);
+      border-radius: 2px; margin: 12px auto 0;
     }
     .modal-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 24px 32px;
+      padding: 16px 20px 14px;
       border-bottom: 0.5px solid var(--border);
       position: sticky; top: 0; background: #111110; z-index: 1;
     }
-    .modal-title { font-size: 11px; font-weight: 500; letter-spacing: 0.22em; color: var(--offwhite); }
+    .modal-title { font-size: 11px; font-weight: 500; letter-spacing: 0.20em; color: var(--offwhite); }
     .modal-close {
       background: none; border: none; cursor: pointer;
-      color: var(--stone); font-size: 20px; line-height: 1;
-      padding: 4px; transition: color 0.2s;
+      color: var(--stone); font-size: 18px; line-height: 1;
+      padding: 4px 4px 4px 16px; transition: color 0.2s;
+      min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: flex-end;
+      -webkit-tap-highlight-color: transparent;
     }
-    .modal-close:hover { color: var(--offwhite); }
-    .modal-body { padding: 32px; }
-    .modal-body h3 { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; color: var(--amber); margin-bottom: 12px; margin-top: 28px; }
+    .modal-close:active { color: var(--offwhite); }
+    .modal-body { padding: 24px 20px 40px; }
+    .modal-body h3 { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; color: var(--amber); margin-bottom: 10px; margin-top: 24px; }
     .modal-body h3:first-child { margin-top: 0; }
-    .modal-body p { font-size: 13px; color: var(--stone); line-height: 1.9; margin-bottom: 12px; }
-    .modal-body ul { padding-left: 20px; margin-bottom: 12px; }
+    .modal-body p { font-size: 13px; color: var(--stone); line-height: 1.9; margin-bottom: 10px; }
+    .modal-body ul { padding-left: 16px; margin-bottom: 10px; }
     .modal-body ul li { font-size: 13px; color: var(--stone); line-height: 1.9; margin-bottom: 6px; }
     .modal-body a { color: var(--offwhite); }
 
-    /* ── MOBILE ── */
-    @media (max-width: 768px) {
-      nav { padding: 0 20px; }
+    /* DESKTOP OVERRIDES */
+    @media (min-width: 768px) {
+      nav { height: 60px; padding: 0 32px; }
+      .nav-menu-btn { display: none !important; }
+      .nav-links { display: flex !important; }
+      .hero { padding: 120px 32px 80px; }
+      .hero-title { letter-spacing: 0.20em; }
+      .products { padding: 80px 32px; }
+      .products-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .product-full { grid-column: auto; }
+      .product-full .product-img-wrap { aspect-ratio: 3/4; }
+      .feature { display: grid; grid-template-columns: 1fr 1fr; }
+      .feature-visual { border-bottom: none; border-right: 0.5px solid var(--border); padding: 80px 48px; min-height: 520px; }
+      .feature-text { padding: 80px 48px; }
+      .drop-banner { padding: 80px 32px; }
+      .manifesto { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; padding: 80px 32px; }
+      .manifesto-quote { margin-bottom: 0; }
+      .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
+      .footer-brand { grid-column: auto; }
+      .footer-bottom { flex-direction: row; justify-content: space-between; }
+      .modal { align-self: center; border-radius: 4px; border-bottom: 0.5px solid var(--border); max-height: 85vh; }
+      .modal-overlay { align-items: center; }
+      .modal-handle { display: none; }
+    }
+
+    @media (max-width: 767px) {
       .nav-links { display: none; }
-      .hero { padding: 100px 20px 72px; }
+      .nav-menu-btn { display: flex; }
       .hero-corner-left, .hero-corner-right { display: none; }
-      section { padding: 56px 20px; }
-      .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .feature { grid-template-columns: 1fr; }
-      .feature-visual { min-height: 300px; padding: 48px 24px; border-right: none; border-bottom: 0.5px solid var(--border); }
-      .feature-text { padding: 48px 24px; }
-      .manifesto { grid-template-columns: 1fr; gap: 32px; }
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-      .modal-body { padding: 24px 20px; }
-      .modal-header { padding: 20px; }
     }
-    @media (max-width: 480px) {
-      .hero-title { letter-spacing: 0.12em; }
-      .products-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
     }
-    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   </style>
 </head>
 <body>
 
 <!-- MODAIS -->
-
-<!-- SOBRE -->
 <div class="modal-overlay" id="modal-sobre" role="dialog" aria-modal="true" aria-label="Sobre a STOKAI">
   <div class="modal">
+    <div class="modal-handle"></div>
     <div class="modal-header">
       <span class="modal-title">SOBRE</span>
       <button class="modal-close" onclick="closeModal('modal-sobre')" aria-label="Fechar">✕</button>
     </div>
     <div class="modal-body">
       <h3>O QUE É A STOKAI</h3>
-      <p>STOKAI nasceu de uma sensação. Aquele momento quando você veste algo e se sente inteiro — no alto, no equilíbrio, em movimento. Não é vaidade. É pertencimento.</p>
-      <p>O nome vem do grego STOA — o pórtico, o abrigo, o lugar de encontro — e KAI — o momento, o impulso, a força do agora. Juntos, formam o que acreditamos que toda roupa deveria fazer: te dar um lugar no mundo.</p>
+      <p>STOKAI nasceu de uma sensação. Aquele momento quando você veste algo e se sente inteiro, no alto, em equilíbrio, em movimento. Não é vaidade. É pertencimento.</p>
+      <p>O nome vem do grego STOA, o pórtico e o lugar de encontro, e KAI, o momento e a força do agora. Juntos, formam o que acreditamos que toda roupa deveria fazer: te dar um lugar no mundo.</p>
       <h3>NOSSA IDENTIDADE</h3>
-      <p>Streetwear urbano construído em cima de um conceito real. Cada peça carrega uma história — do Olimpo à rua, da filosofia grega ao asfalto. Não é só roupa. É um estado de espírito.</p>
+      <p>Streetwear urbano construído em cima de um conceito real. Cada peça carrega uma história, do Olimpo à rua, da filosofia grega ao asfalto. Não é só roupa. É um estado de espírito.</p>
       <h3>DROP 01</h3>
-      <p>A coleção inaugural da STOKAI. Duas estampas, dois mundos, uma identidade. O Olimpo e A Stoa — o alto e o encontro. Find your ground.</p>
+      <p>A coleção inaugural da STOKAI. Duas estampas, dois mundos, uma identidade. O Olimpo e A Stoa. Find your ground.</p>
       <h3>CONTATO</h3>
-      <p>Instagram: <a href="https://instagram.com/stokai.co" target="_blank">@stokai.co</a></p>
+      <p>Instagram: <a href="https://instagram.com/stokai.co" target="_blank" rel="noopener">@stokai.co</a></p>
     </div>
   </div>
 </div>
 
-<!-- MANIFESTO -->
 <div class="modal-overlay" id="modal-manifesto" role="dialog" aria-modal="true" aria-label="Manifesto STOKAI">
   <div class="modal">
+    <div class="modal-handle"></div>
     <div class="modal-header">
       <span class="modal-title">MANIFESTO</span>
       <button class="modal-close" onclick="closeModal('modal-manifesto')" aria-label="Fechar">✕</button>
     </div>
     <div class="modal-body">
       <h3>FIND YOUR GROUND</h3>
-      <p>Tem um momento — você sabe qual é. Quando você veste algo e tudo faz sentido. Você se sente no lugar certo, na hora certa. No alto.</p>
+      <p>Tem um momento e você sabe qual é. Quando você veste algo e tudo faz sentido. Você se sente no lugar certo, na hora certa. No alto.</p>
       <p>A gente chama isso de encontrar seu chão. Seu ground.</p>
       <h3>A STOA</h3>
-      <p>Na Grécia antiga, a Stoa era o pórtico coberto onde filósofos, artistas e cidadãos comuns se encontravam. Um espaço sem hierarquia — qualquer um podia entrar. Era o lugar onde ideias nasciam, onde pessoas encontravam seu lugar.</p>
+      <p>Na Grécia antiga, a Stoa era o pórtico coberto onde filósofos, artistas e cidadãos comuns se encontravam. Um espaço sem hierarquia, qualquer um podia entrar. Era o lugar onde ideias nasciam e pessoas encontravam seu lugar.</p>
       <p>A STOKAI é isso. Um espaço de encontro. Pra quem está em movimento mas sabe onde pisa.</p>
       <h3>O OLIMPO</h3>
-      <p>O ponto mais alto. Não como destino — como estado de espírito. O chalé no topo não é um prêmio. É o lugar que você constrói quando decide parar de correr e começar a existir.</p>
+      <p>O ponto mais alto. Não como destino mas como estado de espírito. O chalé no topo não é um prêmio. É o lugar que você constrói quando decide parar de correr e começar a existir.</p>
       <h3>• • •</h3>
       <p>Três pontos. Três momentos: onde você estava, onde você está, onde você vai. Em equilíbrio. Em movimento. No seu ground.</p>
     </div>
   </div>
 </div>
 
-<!-- FAQ -->
 <div class="modal-overlay" id="modal-faq" role="dialog" aria-modal="true" aria-label="Perguntas frequentes">
   <div class="modal">
+    <div class="modal-handle"></div>
     <div class="modal-header">
       <span class="modal-title">FAQ</span>
       <button class="modal-close" onclick="closeModal('modal-faq')" aria-label="Fechar">✕</button>
     </div>
     <div class="modal-body">
       <h3>COMO FUNCIONA O PEDIDO?</h3>
-      <p>Cada peça é produzida individualmente após a compra. Não trabalhamos com estoque — cada item é feito especialmente pra você.</p>
+      <p>Cada peça é produzida individualmente após a compra. Não trabalhamos com estoque, cada item é feito especialmente pra você.</p>
       <h3>QUAL O PRAZO DE ENTREGA?</h3>
       <p>Entre 7 e 14 dias úteis após a confirmação do pagamento, dependendo da sua localização.</p>
       <h3>QUAIS TAMANHOS ESTÃO DISPONÍVEIS?</h3>
@@ -292,15 +334,15 @@
       <p>Fazemos o máximo pra manter as cores fiéis. Pequenas variações podem ocorrer dependendo da calibração do seu monitor.</p>
       <h3>POSSO RASTREAR MEU PEDIDO?</h3>
       <p>Sim. Após o envio você recebe o código de rastreamento por email.</p>
-      <h3>TENHO DÚVIDAS — COMO ENTRO EM CONTATO?</h3>
-      <p>Manda mensagem no Instagram <a href="https://instagram.com/stokai.co" target="_blank">@stokai.co</a>. A gente responde rápido.</p>
+      <h3>DÚVIDAS?</h3>
+      <p>Manda mensagem no Instagram <a href="https://instagram.com/stokai.co" target="_blank" rel="noopener">@stokai.co</a>. A gente responde rápido.</p>
     </div>
   </div>
 </div>
 
-<!-- POLÍTICA DE TROCAS -->
 <div class="modal-overlay" id="modal-trocas" role="dialog" aria-modal="true" aria-label="Política de trocas">
   <div class="modal">
+    <div class="modal-handle"></div>
     <div class="modal-header">
       <span class="modal-title">TROCAS E DEVOLUÇÕES</span>
       <button class="modal-close" onclick="closeModal('modal-trocas')" aria-label="Fechar">✕</button>
@@ -315,7 +357,7 @@
         <li>Trocas por tamanho estão sujeitas à disponibilidade</li>
       </ul>
       <h3>COMO SOLICITAR</h3>
-      <p>Manda mensagem no Instagram <a href="https://instagram.com/stokai.co" target="_blank">@stokai.co</a> com o número do pedido e uma foto da peça. A gente resolve pra você.</p>
+      <p>Manda mensagem no Instagram <a href="https://instagram.com/stokai.co" target="_blank" rel="noopener">@stokai.co</a> com o número do pedido e uma foto da peça.</p>
       <h3>REEMBOLSO</h3>
       <p>Em caso de devolução aprovada, o reembolso é feito em até 5 dias úteis no mesmo método de pagamento utilizado.</p>
       <h3>ITENS NÃO ELEGÍVEIS</h3>
@@ -330,7 +372,7 @@
 
 <!-- NAV -->
 <nav aria-label="Navegação principal">
-  <a href="#" class="nav-logo" aria-label="STOKAI — página inicial">
+  <a href="#" class="nav-logo" aria-label="STOKAI página inicial">
     <div class="nav-dots" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="nav-wordmark">STOKAI</div>
   </a>
@@ -340,24 +382,36 @@
     <li><a onclick="openModal('modal-sobre')">SOBRE</a></li>
   </ul>
   <div class="nav-actions">
-    <button aria-label="Buscar">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    </button>
     <button aria-label="Carrinho">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </button>
+    <button class="nav-menu-btn" aria-label="Menu" onclick="toggleDrawer()" id="menuBtn">
+      <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer" id="navDrawer" aria-label="Menu mobile">
+  <a href="#colecao" onclick="toggleDrawer()">DROP 01</a>
+  <a onclick="toggleDrawer(); openModal('modal-manifesto')">MANIFESTO</a>
+  <a onclick="toggleDrawer(); openModal('modal-sobre')">SOBRE</a>
+  <a onclick="toggleDrawer(); openModal('modal-faq')">FAQ</a>
+  <a onclick="toggleDrawer(); openModal('modal-trocas')">TROCAS E DEVOLUÇÕES</a>
+  <a href="https://instagram.com/stokai.co" target="_blank" rel="noopener" class="drawer-insta">
+    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+    @stokai.co
+  </a>
+</div>
+
 <!-- HERO -->
-<section class="hero" id="inicio" aria-label="Apresentação da marca">
+<section class="hero" id="inicio">
   <div class="hero-bg" aria-hidden="true">
     <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
       <path d="M0,200 Q300,170 600,200 Q900,230 1200,200" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.08"/>
-      <path d="M0,280 Q300,248 600,280 Q900,312 1200,280" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.06"/>
-      <path d="M0,360 Q300,326 600,360 Q900,394 1200,360" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.07"/>
-      <path d="M0,440 Q300,404 600,440 Q900,476 1200,440" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.05"/>
-      <path d="M0,520 Q300,482 600,520 Q900,558 1200,520" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.06"/>
+      <path d="M0,300 Q300,268 600,300 Q900,332 1200,300" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.06"/>
+      <path d="M0,400 Q300,366 600,400 Q900,434 1200,400" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.07"/>
+      <path d="M0,500 Q300,464 600,500 Q900,536 1200,500" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.05"/>
       <path d="M0,600 Q300,560 600,600 Q900,640 1200,600" fill="none" stroke="#f0ede6" stroke-width="0.4" opacity="0.04"/>
       <path d="M0,680 Q300,638 600,680 Q900,722 1200,680" fill="none" stroke="#ba7517" stroke-width="0.6" opacity="0.25"/>
       <path d="M0,700 Q300,660 600,700 Q900,740 1200,700" fill="none" stroke="#ba7517" stroke-width="0.3" opacity="0.14"/>
@@ -383,7 +437,7 @@
 </section>
 
 <!-- PRODUTOS -->
-<section class="products" id="colecao" aria-label="Coleção Drop 01">
+<section class="products" id="colecao">
   <p class="section-label">PRODUTOS — DROP 01</p>
   <div class="products-grid">
     <article class="product-card">
@@ -426,7 +480,7 @@
       </div>
       <p class="product-sub">Off-white — Drop 01</p>
     </article>
-    <article class="product-card">
+    <article class="product-card product-full">
       <div class="product-img-wrap mid">
         <span class="product-new">NEW</span>
         <svg viewBox="0 0 100 120" aria-hidden="true">
@@ -451,7 +505,7 @@
 </section>
 
 <!-- FEATURE -->
-<section class="feature" aria-label="Estampa principal">
+<div class="feature">
   <div class="feature-visual" aria-hidden="true">
     <svg viewBox="0 0 340 420">
       <path d="M0,280 Q85,265 170,280 Q255,295 340,280" fill="none" stroke="#2c2c2a" stroke-width="0.6"/>
@@ -459,7 +513,6 @@
       <path d="M0,320 Q85,301 170,320 Q255,339 340,320" fill="none" stroke="#252523" stroke-width="0.6"/>
       <path d="M0,340 Q85,319 170,340 Q255,361 340,340" fill="none" stroke="#252523" stroke-width="0.6"/>
       <path d="M0,355 Q100,338 200,352 Q270,362 340,346" fill="none" stroke="#ba7517" stroke-width="2.5" opacity="0.6"/>
-      <path d="M0,370 Q100,355 200,367 Q270,376 340,361" fill="none" stroke="#ba7517" stroke-width="1.2" opacity="0.3"/>
       <rect x="60" y="155" width="220" height="10" fill="#f0ede6"/>
       <path d="M80,155 L92,140 L104,155 L116,140 L128,155 L140,140 L152,155 L164,140 L176,155 L188,140 L200,155 L212,140 L224,155 L236,140 L248,155 L260,140 L272,155" fill="none" stroke="#f0ede6" stroke-width="0.8"/>
       <rect x="58" y="140" width="224" height="16" fill="none" stroke="#f0ede6" stroke-width="1"/>
@@ -497,10 +550,10 @@
   <div class="feature-text">
     <p class="feature-eyebrow">ESTAMPA PRINCIPAL — DROP 01</p>
     <h2 class="feature-title">A Stoa<br>no asfalto</h2>
-    <p class="feature-body">STOA era o pórtico onde os filósofos gregos se reuniam. Um espaço de encontro, pensamento e pertencimento. A STOKAI traz essa estrutura para a rua — colunas erguidas no meio da cidade, com a energia e o peso do urbano ao redor.</p>
+    <p class="feature-body">STOA era o pórtico onde os filósofos gregos se reuniam. Um espaço de encontro, pensamento e pertencimento. A STOKAI traz essa estrutura para a rua, colunas erguidas no meio da cidade, com a energia e o peso do urbano ao redor.</p>
     <a onclick="openModal('modal-manifesto')" class="feature-link">LER MANIFESTO</a>
   </div>
-</section>
+</div>
 
 <!-- DROP BANNER -->
 <div class="drop-banner">
@@ -511,26 +564,22 @@
 </div>
 
 <!-- MANIFESTO -->
-<section class="manifesto" aria-label="Manifesto da marca">
+<section class="manifesto">
   <div>
-    <p class="manifesto-quote">Roupa que te faz sentir <em>no lugar certo</em> — seja onde for.</p>
+    <p class="manifesto-quote">Roupa que te faz sentir <em>no lugar certo</em> seja onde for.</p>
   </div>
   <div class="manifesto-body">
-    <p>STOKAI nasceu de uma sensação. Aquele momento quando você veste algo e se sente inteiro — no alto, no equilíbrio, em movimento. Não é vaidade. É pertencimento.</p>
-    <p>O nome vem do grego STOA — o pórtico, o abrigo, o lugar de encontro — e KAI — o momento, o impulso, a força do agora.</p>
+    <p>STOKAI nasceu de uma sensação. Aquele momento quando você veste algo e se sente inteiro, no alto, no equilíbrio, em movimento. Não é vaidade. É pertencimento.</p>
+    <p>O nome vem do grego STOA, o pórtico e o lugar de encontro, e KAI, o momento e a força do agora.</p>
     <p>Streetwear urbano feito pra quem está em movimento mas sabe onde pisa.</p>
   </div>
 </section>
 
-<!-- INSTAGRAM STRIP -->
+<!-- INSTAGRAM -->
 <div class="insta-strip">
   <p>SIGA A GENTE</p>
   <a href="https://instagram.com/stokai.co" target="_blank" rel="noopener" class="insta-link">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-      <circle cx="12" cy="12" r="4"/>
-      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
     @stokai.co
   </a>
 </div>
@@ -548,7 +597,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
-    <div>
+    <div class="footer-brand">
       <p class="footer-brand-name">STOKAI</p>
       <p class="footer-brand-desc">Streetwear urbano construído em cima de um conceito real. Find your ground.</p>
     </div>
@@ -567,24 +616,21 @@
     </div>
     <div class="footer-col">
       <h4>REDES SOCIAIS</h4>
-      <a href="https://instagram.com/stokai.co" target="_blank" rel="noopener" class="footer-social">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-        </svg>
+      <a href="https://instagram.com/stokai.co" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
         @stokai.co
       </a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 STOKAI — FIND YOUR GROUND</span>
+    <span>© 2026 STOKAI</span>
     <span>FEITO NO BRASIL</span>
   </div>
 </footer>
 
 <script>
   function openModal(id) {
+    document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -592,22 +638,21 @@
     document.getElementById(id).classList.remove('active');
     document.body.style.overflow = '';
   }
-  // fechar clicando fora do modal
+  function toggleDrawer() {
+    const d = document.getElementById('navDrawer');
+    d.classList.toggle('open');
+    document.body.style.overflow = d.classList.contains('open') ? 'hidden' : '';
+  }
   document.querySelectorAll('.modal-overlay').forEach(overlay => {
     overlay.addEventListener('click', function(e) {
-      if (e.target === this) {
-        this.classList.remove('active');
-        document.body.style.overflow = '';
-      }
+      if (e.target === this) { this.classList.remove('active'); document.body.style.overflow = ''; }
     });
   });
-  // fechar com ESC
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-      document.querySelectorAll('.modal-overlay.active').forEach(m => {
-        m.classList.remove('active');
-        document.body.style.overflow = '';
-      });
+      document.querySelectorAll('.modal-overlay.active').forEach(m => { m.classList.remove('active'); document.body.style.overflow = ''; });
+      document.getElementById('navDrawer').classList.remove('open');
+      document.body.style.overflow = '';
     }
   });
 </script>
